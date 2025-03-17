@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
     Pila pila0,pila1;
 
 
-    inicpila(&pila1);
+    inicpila(&pila1); //ACA
 
     do {
         selected = menu();
@@ -84,7 +84,7 @@ void cargarPILA(Pila *pila) {
         printf("\nIngrese un número para la pila: \n");
         leer(pila);
         printf("\nDesea ingresar otro número? (s/n): ");
-        fflush(stdin);  // Limpiar buffer de entrada
+        
         scanf(" %c", &respuesta);
 
     } while (respuesta == 's' || respuesta == 'S');
