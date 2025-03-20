@@ -51,18 +51,27 @@ int main(int argc, char *argv[]) {
                 inicpila(&pila0);
                 cargarPILA(&pila0);
                 ordenamientoSeleccion(&pila0);
+                /*
                 printf("Pila origen:");
                 mostrar(&pila0);
+                */
                 system("PAUSE");
                 break;
             case 6:
-                inicpila(&pila0);
+               inicpila(&pila0);
                 cargarPILA(&pila0);
-                int dato;
                 ordenamientoSeleccion(&pila0);
-                printf("Ingrese un dato a insertar en la pila: /n");
-                scanf(&dato);
-                ordenamientoInsercion(&pila0, &dato);
+                int dato;
+                printf("Ingrese un dato a insertar en la pila: ");
+                scanf("%d", &dato);
+                insertarElemento(&pila0, dato);
+                printf("Pila con el nuevo elemento insertado:\n");
+                mostrar(&pila0);
+                system("PAUSE");
+                break;
+            case 7:
+
+
 
                 system("PAUSE");
                 break;
@@ -94,6 +103,7 @@ int menu() {
     printf("\n4- Hacer una función que encuentre el menor elemento de una pila y lo retorna. La misma debe eliminar ese dato de la pila.");
     printf("\n5- Hacer una función que pase los elementos de una pila a otra, de manera que se genere una nueva pila ordenada. Usar la función del ejercicio 4. (Ordenamiento por selección).");
     printf("\n6- Hacer una función que inserta en una pila ordenada un nuevo elemento, conservando el orden de ésta.");
+    printf("\n7- Hacer una función que pase los elementos de una pila a otra, de manera que se genere una nueva pila ordenada. Usar la función del ejercicio 6.  (Ordenamiento por inserción).");
     printf("\n0- SALIR");
     printf("\n\nIngrese su elección: ");
     scanf("%d", &input);
@@ -202,41 +212,23 @@ void ordenamientoSeleccion (Pila *origen){
     }
     printf("Pila destino:\n");
     mostrar(&destino);
+    printf("Pila origen:");
+    mostrar(origen);
 }
 
-
-void insertarElemento (Pila *pila, int *dato){
+void insertarElemento(Pila *pila, int dato) {
     Pila aux;
-    
-    while(!pilavacia(pila)){
-        
-    }
-    
-    
+    inicpila(&aux);
 
-   // Reconstruir la pila SIN el menor
+    while (!pilavacia(pila) && tope(pila) < dato) {
+        apilar(&aux, desapilar(pila));
+    }
+
+    apilar(pila, dato);
+
     while (!pilavacia(&aux)) {
-        if (tope(&aux) != menor) {  // Solo apilar si NO es el menor
-            apilar(pila, desapilar(&aux));
-        } else {
-            desapilar(&aux);  // Eliminar el menor
-        }
+        apilar(pila, desapilar(&aux));
     }
-
-
-    return menor; // Devuelve el menor eliminado
-}
-
-void ordenamientoSeleccion (Pila *origen){
-    Pila destino;
-    inicpila (&destino);
-
-    while(!pilavacia(origen)){
-        int elemento=encontrarMenor(origen);
-        apilar(&destino, elemento);
-    }
-    printf("Pila destino ordenada:");
-    mostrar(&destino);
 }
 
 
