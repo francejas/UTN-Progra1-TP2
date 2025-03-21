@@ -14,9 +14,22 @@ int encontrarMenorElemento (Pila *pila);
 
 int main(int argc, char *argv[]) {
     int selected;
-    Pila pila0,pila1;
+    Pila pila0,pilaOrdenadaMayorAMenor,pilaOrdenadaMenorAMayor;
 
     inicpila(&pila0);
+    inicpila(&pilaOrdenadaMayorAMenor);
+    inicpila(&pilaOrdenadaMenorAMayor);
+
+    apilar(&pilaOrdenadaMayorAMenor,6);
+    apilar(&pilaOrdenadaMayorAMenor,4);
+    apilar(&pilaOrdenadaMayorAMenor,3);
+    apilar(&pilaOrdenadaMayorAMenor,1);
+
+    apilar(&pilaOrdenadaMenorAMayor,1);
+    apilar(&pilaOrdenadaMenorAMayor,3);
+    apilar(&pilaOrdenadaMenorAMayor,4);
+    apilar(&pilaOrdenadaMenorAMayor,6);
+
 
     do {
         selected = menu();
@@ -58,18 +71,28 @@ int main(int argc, char *argv[]) {
                 system("PAUSE");
                 break;
             case 6:
-               inicpila(&pila0);
-                cargarPILA(&pila0);
-                ordenamientoSeleccion(&pila0);
+                printf("Pila ordenada de Menor a Mayor");
+                mostrar(&pilaOrdenadaMenorAMayor);
                 int dato;
                 printf("Ingrese un dato a insertar en la pila: ");
                 scanf("%d", &dato);
-                insertarElemento(&pila0, dato);
+                insertarElemento(&pilaOrdenadaMenorAMayor, dato);
                 printf("Pila con el nuevo elemento insertado:\n");
-                mostrar(&pila0);
+                mostrar(&pilaOrdenadaMenorAMayor);
                 system("PAUSE");
                 break;
             case 7:
+                inicpila(&pila0);
+                cargarPILA(&pila0);
+                ordenamientoInsercion(&pila0);
+                printf("Pila ordenada por insercion:");
+                mostrar(&pila0);
+                system("PAUSE");
+                break;
+            case 8:
+                inicpila(&pila0);
+                cargarPILA(&pila0);
+                int suma=sumaTopeAnterior(pila0);
 
 
 
@@ -104,6 +127,7 @@ int menu() {
     printf("\n5- Hacer una función que pase los elementos de una pila a otra, de manera que se genere una nueva pila ordenada. Usar la función del ejercicio 4. (Ordenamiento por selección).");
     printf("\n6- Hacer una función que inserta en una pila ordenada un nuevo elemento, conservando el orden de ésta.");
     printf("\n7- Hacer una función que pase los elementos de una pila a otra, de manera que se genere una nueva pila ordenada. Usar la función del ejercicio 6.  (Ordenamiento por inserción).");
+    printf("\n8- Hacer una función que sume los dos primeros elementos de una pila (tope y anterior), y retorne la suma,  sin alterar el contenido de la pila. ");
     printf("\n0- SALIR");
     printf("\n\nIngrese su elección: ");
     scanf("%d", &input);
@@ -194,6 +218,7 @@ int encontrarMenor (Pila *pila){
     return menor; // Devuelve el menor eliminado
 }
 
+// ORDENA DE MAYOR A MENOR
 void ordenamientoSeleccion (Pila *origen){
     Pila destino;
     inicpila (&destino);
@@ -220,7 +245,10 @@ void insertarElemento(Pila *pila, int dato) {
     Pila aux;
     inicpila(&aux);
 
-    while (!pilavacia(pila) && tope(pila) < dato) {
+    //tope(pila) > dato FUNCIONA SOLO CON PILAS ORDENADAS DE MENOR A MAYOR.
+    //tope(pila) < dato FUNCIONA SOLO CON PILAS ORDENADAS DE MAYOR A MENOR.
+    // SI LE  PASO A ESTA FUNCION  UN A PILA DESORDENADA, APILA EN PILA EL MENOR ELEMTO.
+    while (!pilavacia(pila) && tope(pila) > dato) {
         apilar(&aux, desapilar(pila));
     }
 
@@ -231,4 +259,16 @@ void insertarElemento(Pila *pila, int dato) {
     }
 }
 
+//ordena de mayor a menor
+void ordenamientoInsercion(Pila *pila){
+    Pila aux;
+    inicpila(&aux);
 
+    while(!pilavacia(pila)){
+        int dato=desapilar(pila);
+        insertarElemento(&aux,dato);
+    }
+    while(!pilavacia(&aux)){
+        apilar(pila, desapilar(&aux));
+    }
+}
