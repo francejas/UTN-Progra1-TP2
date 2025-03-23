@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "pila.h"
 
 // Prototipos de funciones
@@ -10,7 +11,14 @@ void pasarPilaOrdenada(Pila *origen);
 int encontrarMenor (Pila *pila);
 void ordenamientoSeleccion (Pila *origen);
 int encontrarMenorElemento (Pila *pila);
-
+void ordenamientoInsercion(Pila *pila);
+void insertarElemento(Pila *pila, int dato);
+int sumaTopeAnterior (Pila pila);
+float promedioPila(Pila pila);
+int sumaElementosPila(Pila pila);
+int cantidadElementos(Pila pila);
+float division (float a, float b);
+int convertirPilaADecimal (Pila pila);
 
 int main(int argc, char *argv[]) {
     int selected;
@@ -93,9 +101,21 @@ int main(int argc, char *argv[]) {
                 inicpila(&pila0);
                 cargarPILA(&pila0);
                 int suma=sumaTopeAnterior(pila0);
-
-
-
+                printf("La suma del tope y la base de la pila es: %d \n",suma);
+                system("PAUSE");
+                break;
+            case 9:
+                inicpila(&pila0);
+                cargarPILA(&pila0);
+                float promedio=promedioPila(pila0);
+                printf("El promedio de los elementos de la pila es: %.2f\n", promedio);
+                system("PAUSE");
+                break;
+            case 10:
+                inicpila(&pila0);
+                cargarPILA(&pila0);
+                int numeroDecimal = convertirPilaADecimal(pila0);
+                printf("Pila a decimal: %d \n", numeroDecimal);
                 system("PAUSE");
                 break;
             case 0:
@@ -127,7 +147,9 @@ int menu() {
     printf("\n5- Hacer una función que pase los elementos de una pila a otra, de manera que se genere una nueva pila ordenada. Usar la función del ejercicio 4. (Ordenamiento por selección).");
     printf("\n6- Hacer una función que inserta en una pila ordenada un nuevo elemento, conservando el orden de ésta.");
     printf("\n7- Hacer una función que pase los elementos de una pila a otra, de manera que se genere una nueva pila ordenada. Usar la función del ejercicio 6.  (Ordenamiento por inserción).");
-    printf("\n8- Hacer una función que sume los dos primeros elementos de una pila (tope y anterior), y retorne la suma,  sin alterar el contenido de la pila. ");
+    printf("\n8- Hacer una función que sume los dos primeros elementos de una pila (tope y anterior), y retorne la suma,  sin alterar el contenido de la pila.");
+    printf("\n9- Hacer una función que calcule el promedio de los elementos de una pila, para ello hacer también una función que calcule la suma, otra para la cuenta y otra que divida. En total son cuatro funciones, y la función que calcula el promedio invoca a las otras 3.");
+    printf("\n10- Hacer una función que reciba una pila con números de un solo dígito (es responsabilidad de quien usa el programa) y que transforme esos dígitos en un número decimal.");
     printf("\n0- SALIR");
     printf("\n\nIngrese su elección: ");
     scanf("%d", &input);
@@ -272,3 +294,65 @@ void ordenamientoInsercion(Pila *pila){
         apilar(pila, desapilar(&aux));
     }
 }
+
+int sumaTopeAnterior (Pila pila){
+    int a,b;
+    a = desapilar(&pila);
+
+    while(!pilavacia(&pila)){
+        b = desapilar(&pila);
+    }
+
+    return a+b;
+}
+
+float promedioPila(Pila pila) {
+    int suma = sumaElementosPila(pila);
+    int n = cantidadElementos(pila);
+    //convierto suma y n en float , no entiendo muy bien porqe
+    float promedio = division((float)suma,(float)n);
+
+    return promedio;
+}
+
+int sumaElementosPila(Pila pila){
+     int suma=0;
+     while(!pilavacia(&pila)) {
+        suma+=desapilar(&pila);
+     }
+
+    return suma;
+}
+
+int cantidadElementos(Pila pila){
+    int n=0;
+
+    while(!pilavacia(&pila)){
+        desapilar(&pila);
+    n++;
+    }
+
+    return n;
+
+}
+
+float division (float a, float b){
+    float cociente = a/b;
+
+    return cociente;
+}
+
+int convertirPilaADecimal (Pila pila){
+    int n=cantidadElementos(pila);
+    int decimal=0;
+
+    while(!pilavacia(&pila)){
+     for (int i=n-1;i>=0;i--){
+        decimal+=tope(&pila) * 10^(i);
+        desapilar(&pila);
+    }
+}
+
+    return decimal;
+}
+
