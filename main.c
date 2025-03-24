@@ -114,7 +114,8 @@ int main(int argc, char *argv[]) {
             case 10:
                 inicpila(&pila0);
                 cargarPILA(&pila0);
-                int numeroDecimal = convertirPilaADecimal(pila0);
+                int numeroDecimal=0;
+                numeroDecimal = convertirPilaADecimal(pila0);
                 printf("Pila a decimal: %d \n", numeroDecimal);
                 system("PAUSE");
                 break;
@@ -341,6 +342,22 @@ float division (float a, float b){
 
     return cociente;
 }
+/*
+int convertirPilaADecimal (Pila pila){
+    int n=cantidadElementos(pila);
+    int decimal=0;
+
+    while(!pilavacia(&pila)){
+     for (int i=n-1;i>=0;i--){
+        //decimal+=tope(&pila) * 10^(i);
+        decimal=decimal+tope(&pila) * 10^(i);
+        desapilar(&pila);
+    }
+}
+
+    return decimal;
+}
+*/
 
 int convertirPilaADecimal (Pila pila){
     int n=cantidadElementos(pila);
@@ -348,11 +365,13 @@ int convertirPilaADecimal (Pila pila){
 
     while(!pilavacia(&pila)){
      for (int i=n-1;i>=0;i--){
-        decimal+=tope(&pila) * 10^(i);
+        decimal+=tope(&pila) * (int)pow(10, i);
         desapilar(&pila);
+
     }
 }
 
     return decimal;
 }
+
 
